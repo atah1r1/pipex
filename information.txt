@@ -1,0 +1,20 @@
+fd {
+	0: stdin
+	1: stdout
+	2: stderr
+}
+
+
+fork() =====> create new child process {
+	return {
+		< 0 : error in forking
+		== 0 : your are in child proccess
+		> 0 : your are in parent proccess 
+	}
+}
+
+dup () =====> create a copy of file descriptor {
+	return {
+		-1 : any other error (errno set to the error returned)
+	}
+}

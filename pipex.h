@@ -6,7 +6,7 @@
 /*   By: atahiri <atahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/24 09:32:40 by atahiri           #+#    #+#             */
-/*   Updated: 2021/06/24 13:24:40 by atahiri          ###   ########.fr       */
+/*   Updated: 2021/06/24 16:57:00 by atahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@
 # include <unistd.h>
 # include <string.h>
 # include <fcntl.h>
+# include <sys/errno.h>
+
+# define PERMISSION S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH
 
 typedef struct s_pipex {
 	int		fd[2];

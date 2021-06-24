@@ -6,7 +6,7 @@
 #    By: atahiri <atahiri@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/24 09:44:00 by atahiri           #+#    #+#              #
-#    Updated: 2021/06/24 09:46:35 by atahiri          ###   ########.fr        #
+#    Updated: 2021/06/24 13:25:36 by atahiri          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,10 @@ all:	$(NAME)
 
 SRCS =	ft_split.c\
 		pipex.c\
+		ft_substr.c\
+		ft_strlen.c\
+		ft_strjoin.c\
+		ft_strncmp.c\
 
 OBJS =	$(SRCS:.c=.o)
 

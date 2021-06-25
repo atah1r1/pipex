@@ -6,7 +6,7 @@
 /*   By: atahiri <atahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/24 09:32:24 by atahiri           #+#    #+#             */
-/*   Updated: 2021/06/24 17:16:15 by atahiri          ###   ########.fr       */
+/*   Updated: 2021/06/25 12:02:48 by atahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ void	free_all()
 {
 	free(g_all.cmd1_path);
 	free(g_all.cmd2_path);
-	// free(g_all.input);
-	// free(g_all.output);
 	free_d_p(g_all.cmd1);
 	free_d_p(g_all.cmd2);
 }
@@ -116,6 +114,7 @@ char	*get_path(char **envp, char *cmd)
 			{
 				command = ft_strjoin("/", cmd); // need to be freed
 				full_path = ft_strjoin(paths[j], command);
+				free(command);
 				if (open(full_path, O_RDONLY) != -1)
 				{
 					return full_path;
@@ -124,8 +123,7 @@ char	*get_path(char **envp, char *cmd)
 			}
 		}
 	}
-	free(command);
-	free(paths);
+	free_d_p(paths);
 	return (NULL);
 }
 
@@ -146,12 +144,13 @@ int	main(int argc, char **argv, char **envp)
 	if (argc != 5)
 	{
 		write(1, "Usage: ./pipex [file1] [cmd1] [cmd2] [file2]", 44);
+		return -1;
 	}
 	get_commands(argv, envp);
 	setup_redir();
 	exec_command(envp);
 	free_all();
-	while (1);
+	// while (1);
 	
 	// printf("input_file %s | output_file %s | cmd1 %s | cmd2 %s | cmd1_path %s | cmd2_path %s", g_all.input, g_all.output, g_all.cmd1[0], g_all.cmd2[0], g_all.cmd1_path, g_all.cmd2_path);
 	return (0);

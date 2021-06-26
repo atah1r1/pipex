@@ -6,11 +6,18 @@
 /*   By: atahiri <atahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/24 09:32:24 by atahiri           #+#    #+#             */
-/*   Updated: 2021/06/25 12:02:48 by atahiri          ###   ########.fr       */
+/*   Updated: 2021/06/26 21:45:57 by atahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+void	exit_func(char *msg, int code)
+{
+	write(2, msg, ft_strlen(msg));
+	write(2, "\n", 1);
+	exit(code);
+}
 
 void free_d_p(char **ptr)
 {
@@ -69,7 +76,9 @@ void	exec_command(char **envp)
 		close(g_all.fd[1]);
 		if (execve(g_all.cmd1_path, g_all.cmd1, envp) == -1)
 		{
-			write(2, strerror(errno), ft_strlen(strerror(errno)));
+			write(2, "pipex: ", 7);
+			write(2, g_all.cmd1[0], ft_strlen(g_all.cmd1[0]));
+			exit_func(": command not found", 127);
 		}
 	}
 	pid_2 = fork();
@@ -86,7 +95,9 @@ void	exec_command(char **envp)
 		close(g_all.fd[1]);
 		if (execve(g_all.cmd2_path, g_all.cmd2, envp) == -1)
 		{
-			write(2, strerror(errno), ft_strlen(strerror(errno)));
+			write(2, "pipex: ", 7);
+			write(2, g_all.cmd2[0], ft_strlen(g_all.cmd2[0]));
+			exit_func(": command not found", 127);
 		}
 	}
 	close(g_all.fd[0]);

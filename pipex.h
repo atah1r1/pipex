@@ -6,7 +6,7 @@
 /*   By: atahiri <atahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/24 09:32:40 by atahiri           #+#    #+#             */
-/*   Updated: 2021/06/27 12:07:12 by atahiri          ###   ########.fr       */
+/*   Updated: 2021/06/27 19:30:06 by atahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@
 # include <sys/errno.h>
 
 typedef struct s_pipex {
-	int		fd[2];
+	int		fd1;
+	int		fd2;
 	char	*input;
 	char	**cmd1;
 	char	**cmd2;

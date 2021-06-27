@@ -6,7 +6,7 @@
 /*   By: atahiri <atahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/24 09:32:24 by atahiri           #+#    #+#             */
-/*   Updated: 2021/06/27 12:40:52 by atahiri          ###   ########.fr       */
+/*   Updated: 2021/06/27 13:01:52 by atahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,55 +37,20 @@ void	free_all()
 	free_d_p(g_all.cmd2);
 }
 
-void	exec_cmd1(char **envp)
+void	setup_redir()
 {
-	int in_fd;
-
-	in_fd = open(g_all.input, O_RDONLY);
-	if (in_fd == -1)
+	g_all.fd[0]= open(g_all.input, O_RDONLY);
+	if (g_all.fd[0] == -1)
 	{
 		write(2, "pipex: ", 7);
 		write(2, g_all.input, ft_strlen(g_all.input));
 		write(2, ": No such file or directory\n", 28);
+		exit(EXIT_FAILURE);
 	}
-	else 
-	{
-		close(g_all.fd[0]);
-		dup2(in_fd, STDIN_FILENO);
-		dup2(g_all.fd[1], STDOUT_FILENO);
-		close(g_all.fd[1]);
-		if (execve(g_all.cmd1_path, g_all.cmd1, envp) == -1)
-		{
-			write(2, "pipex: ", 7);
-			write(2, g_all.cmd1[0], ft_strlen(g_all.cmd1[0]));
-			exit_func(": command not found", 127);
-		}
-	}
-}
-
-void	exec_cmd2(char **envp)
-{
-	int out_fd;
-
-	out_fd = open(g_all.output, O_WRONLY | O_CREAT | O_TRUNC | S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-	if (out_fd == -1)
-	{
-		write(2, "pipex: ", 7);
-		write(2, strerror(errno), ft_strlen(strerror(errno)));
-		write(2, ": ", 2);
-		exit_func(g_all.output, 1);
-	}
-	close(g_all.fd[1]);
-	dup2(out_fd, STDOUT_FILENO);
-	dup2(g_all.fd[0], STDIN_FILENO);
-	close(g_all.fd[0]);
-	if (execve(g_all.cmd2_path, g_all.cmd2, envp) == -1)
-	{
-		write(2, "pipex: ", 7);
-		write(2, g_all.cmd2[0], ft_strlen(g_all.cmd2[0]));
-		exit_func(": command not found", 127);
-	}
-	exit(EXIT_SUCCESS);
+	else
+		dup2(g_all.fd[0], STDIN_FILENO);
+	g_all.fd[1] = open(g_all.output, O_WRONLY | O_CREAT | O_TRUNC , S_IRUSR | S_IWUSR);
+	dup2(g_all.fd[1], STDOUT_FILENO);
 }
 
 void	exec_command(char **envp)
@@ -94,25 +59,52 @@ void	exec_command(char **envp)
 	pid_t	pid_2;
 	
 	if (pipe(g_all.fd) == -1)
-		exit_func("Error in PIPE", EXIT_FAILURE);
+	{
+		write(2, "Error: PIPE", 11);
+		exit(EXIT_FAILURE);
+	}
 	pid_1 = fork();
 	if (pid_1 < 0)
-		exit_func("Error in FORK", EXIT_FAILURE);
-	else if (pid_1 == 0)
-		exec_cmd1(envp);
-	else
-		waitpid(pid_1,&g_all.status,0);
-	pid_2 = fork();
-	if (pid_1 < 0)
-		exit_func("Error in FORK", EXIT_FAILURE);
-	else if (pid_2 == 0)
-		exec_cmd2(envp);
-	else 
 	{
+		write(2, "Error: FORK", 11);
+		exit(EXIT_FAILURE);
+	}
+	else if (pid_1 == 0)
+	{
+		close(1);
+		dup(g_all.fd[1]);
 		close(g_all.fd[0]);
 		close(g_all.fd[1]);
-		waitpid(pid_2,&g_all.status,0);	
+		if (execve(g_all.cmd1_path, g_all.cmd1, envp) == -1)
+		{
+			write(2, "pipex: ", 7);
+			write(2, g_all.cmd1[0], ft_strlen(g_all.cmd1[0]));
+			exit_func(": command not found", 127);
+		}
 	}
+	pid_2 = fork();
+	if (pid_1 < 0)
+	{
+		write(2, "Error: FORK", 11);
+		exit(EXIT_FAILURE);
+	}
+	if (pid_2 == 0)
+	{
+		close(0);
+		dup(g_all.fd[0]);
+		close(g_all.fd[0]);
+		close(g_all.fd[1]);
+		if (execve(g_all.cmd2_path, g_all.cmd2, envp) == -1)
+		{
+			write(2, "pipex: ", 7);
+			write(2, g_all.cmd2[0], ft_strlen(g_all.cmd2[0]));
+			exit_func(": command not found", 127);
+		}
+	}
+	close(g_all.fd[0]);
+	close(g_all.fd[1]);
+	waitpid(pid_1,NULL,0);
+	waitpid(pid_2,NULL,0);
 }
 
 char	*get_path(char **envp, char *cmd)
@@ -166,8 +158,9 @@ int	main(int argc, char **argv, char **envp)
 		return -1;
 	}
 	get_commands(argv, envp);
+	setup_redir();
 	exec_command(envp);
-	// free_all();
+	free_all();
 	// while (1);
 	
 	// printf("input_file %s | output_file %s | cmd1 %s | cmd2 %s | cmd1_path %s | cmd2_path %s", g_all.input, g_all.output, g_all.cmd1[0], g_all.cmd2[0], g_all.cmd1_path, g_all.cmd2_path);

@@ -6,7 +6,7 @@
 /*   By: atahiri <atahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/24 09:32:24 by atahiri           #+#    #+#             */
-/*   Updated: 2021/06/28 15:36:42 by atahiri          ###   ########.fr       */
+/*   Updated: 2021/06/28 16:06:04 by atahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	exec_cmd2(char **envp, int fd[2])
 		write(2, "pipex: ", 7);
 		write(2, strerror(errno), ft_strlen(strerror(errno)));
 		write(2, ": ", 2);
-		exit_func(g_all.output, 1);
+		exit_func(g_all.output, EXIT_FAILURE);
 	}
 	close(fd[1]);
 	dup2(fd[0], 0);
@@ -101,5 +101,6 @@ int	main(int argc, char **argv, char **envp)
 	get_commands(argv, envp);
 	exec_command(envp);
 	free_all_func();
+	while(1);
 	return (WEXITSTATUS(g_all.status));
 }

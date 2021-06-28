@@ -6,7 +6,7 @@
 /*   By: atahiri <atahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 14:39:46 by atahiri           #+#    #+#             */
-/*   Updated: 2021/06/28 15:15:39 by atahiri          ###   ########.fr       */
+/*   Updated: 2021/06/28 16:56:01 by atahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 char	*get_path(char **envp, char *cmd)
 {
 	char	**paths;
+	char	*command;
 	char	*full_path;
 	int		i;
 	int		j;
@@ -28,13 +29,18 @@ char	*get_path(char **envp, char *cmd)
 			paths = ft_split(ft_substr(envp[i], 5, ft_strlen(envp[i])), ':');
 			while (paths[++j])
 			{
-				full_path = ft_strjoin(paths[j], ft_strjoin("/", cmd));
+				command = ft_strjoin("/", cmd);
+				full_path = ft_strjoin(paths[j], command);
+				free(command);
 				if (open(full_path, O_RDONLY) != -1)
+				{
 					return (full_path);
+					free(full_path);
+				}
 				free(full_path);
+				free(paths[j]);
 			}
 		}
 	}
-	free_d_p(paths);
 	return (NULL);
 }

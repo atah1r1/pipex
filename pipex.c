@@ -6,7 +6,7 @@
 /*   By: atahiri <atahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/24 09:32:24 by atahiri           #+#    #+#             */
-/*   Updated: 2021/06/28 16:06:04 by atahiri          ###   ########.fr       */
+/*   Updated: 2021/06/28 21:55:38 by atahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,10 +83,10 @@ void	exec_command(char **envp)
 
 void	get_commands(char **argv, char **envp)
 {
-	g_all.input = argv[1];
+	g_all.input = strdup(argv[1]);
 	g_all.cmd1 = ft_split(argv[2], ' ');
 	g_all.cmd2 = ft_split(argv[3], ' ');
-	g_all.output = argv[4];
+	g_all.output = strdup(argv[4]);
 	g_all.cmd1_path = get_path(envp, g_all.cmd1[0]);
 	g_all.cmd2_path = get_path(envp, g_all.cmd2[0]);
 }

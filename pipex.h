@@ -6,7 +6,7 @@
 /*   By: atahiri <atahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/24 09:32:40 by atahiri           #+#    #+#             */
-/*   Updated: 2021/06/27 19:30:06 by atahiri          ###   ########.fr       */
+/*   Updated: 2021/06/28 14:57:14 by atahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,8 @@ int		ft_strlen(char *s);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strjoin(char *s1, char *s2);
 int		ft_strncmp(char *s1, char *s2, size_t n);
+char	*get_path(char **envp, char *cmd);
+void	exit_func(char *msg, int code);
+void	free_d_p(char **ptr);
+void	free_all_func(void);
 #endif

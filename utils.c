@@ -1,38 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_substr.c                                        :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: atahiri <atahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/24 13:04:00 by atahiri           #+#    #+#             */
-/*   Updated: 2021/06/28 14:52:30 by atahiri          ###   ########.fr       */
+/*   Created: 2021/06/28 14:41:11 by atahiri           #+#    #+#             */
+/*   Updated: 2021/06/28 15:26:01 by atahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+void	exit_func(char *msg, int code)
 {
-	char	*str;
-	size_t	count;
-	size_t	lens;
+	write(2, msg, ft_strlen(msg));
+	write(2, "\n", 1);
+	exit(code);
+}
 
-	count = 0;
-	if (!s)
-		return (NULL);
-	lens = ft_strlen((char *)s);
-	if (start > lens)
-		len = 0;
-	str = malloc((len + 1 * sizeof(char)));
-	if (!str)
-		return (NULL);
-	while (count < len && s[start] && start < lens)
-	{
-		str[count] = *(unsigned char *)(s + start);
-		start++;
-		count++;
-	}
-	str[count] = '\0';
-	return (str);
+void	free_d_p(char **ptr)
+{
+	int	i;
+
+	i = -1;
+	while (ptr[++i])
+		free(ptr[i]);
+	free(ptr);
+}
+
+void	free_all_func(void)
+{
+	free(g_all.cmd1_path);
+	free(g_all.cmd2_path);
+	free_d_p(g_all.cmd1);
+	free_d_p(g_all.cmd2);
 }

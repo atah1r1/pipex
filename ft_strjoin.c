@@ -6,7 +6,7 @@
 /*   By: atahiri <atahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/24 13:08:26 by atahiri           #+#    #+#             */
-/*   Updated: 2021/06/24 13:11:25 by atahiri          ###   ########.fr       */
+/*   Updated: 2021/06/28 14:51:52 by atahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ char	*ft_strjoin(char *s1, char *s2)
 		return (NULL);
 	lens1 = ft_strlen(s1);
 	lens2 = ft_strlen(s2);
-	if (!(new = (char *)malloc(lens1 + lens2 + 1)))
+	new = (char *)malloc(lens1 + lens2 + 1);
+	if (!new)
 		return (NULL);
 	while (i < lens1)
 	{

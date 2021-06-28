@@ -6,7 +6,7 @@
 #    By: atahiri <atahiri@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/24 09:44:00 by atahiri           #+#    #+#              #
-#    Updated: 2021/06/24 13:25:36 by atahiri          ###   ########.fr        #
+#    Updated: 2021/06/28 15:38:27 by atahiri          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,8 @@ SRCS =	ft_split.c\
 		ft_strlen.c\
 		ft_strjoin.c\
 		ft_strncmp.c\
+		get_path.c\
+		utils.c\
 
 OBJS =	$(SRCS:.c=.o)
 

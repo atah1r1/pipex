@@ -30,12 +30,6 @@ typedef struct s_pipex {
 	char	*cmd1_path;
 	char	*cmd2_path;
 	int		status;
-	char	**paths;
-	char	*command;
-	char	*f_path;
-	char	*s_path;
-	int		i;
-	int		j;
 }				t_pipex;
 
 t_pipex	g_all;

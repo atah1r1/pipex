@@ -12,31 +12,46 @@
 
 #include "pipex.h"
 
-char	*get_path(char **envp, char *cmd)
+char	**collect_paths(char **envp)
 {
-	g_all.i = -1;
-	while (envp[++g_all.i])
+	char	*sub_path;
+	char	**paths;
+	int		i;
+
+	i = -1;
+	while (envp[++i])
 	{
-		g_all.j = -1;
-		if (!ft_strncmp(envp[g_all.i], "PATH=", 5))
+		if (!ft_strncmp(envp[i], "PATH=", 5))
 		{
-			g_all.s_path = ft_substr(envp[g_all.i], 5, ft_strlen(envp[g_all.i]));
-			g_all.paths = ft_split(g_all.sub_path, ':');
-			free(g_all.sub_path);
-			while (g_all.paths[++g_all.j])
-			{
-				g_all.command = ft_strjoin("/", cmd);
-				g_all.f_path = ft_strjoin(g_all.paths[g_all.j], g_all.command);
-				free(g_all.command);
-				if (open(g_all.full_path, O_RDONLY) != -1)
-				{
-					free_d_p(g_all.paths);
-					return (g_all.full_path);
-				}
-				free(g_all.full_path);
-			}
-			free_d_p(g_all.paths);
+			sub_path = ft_substr(envp[i], 5, ft_strlen(envp[i]));
+			paths = ft_split(sub_path, ':');
+			free(sub_path);
 		}
 	}
+	return (paths);
+}
+
+char	*get_path(char **envp, char *cmd)
+{
+	char	**paths;
+	char	*command;
+	char	*full_path;
+	int		j;
+
+	j = -1;
+	paths = collect_paths(envp);
+	while (paths[++j])
+	{
+		command = ft_strjoin("/", cmd);
+		full_path = ft_strjoin(paths[j], command);
+		free(command);
+		if (open(full_path, O_RDONLY) != -1)
+		{
+			free_d_p(paths);
+			return (full_path);
+		}
+		free(full_path);
+	}
+	free_d_p(paths);
 	return (NULL);
 }

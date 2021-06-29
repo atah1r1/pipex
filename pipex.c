@@ -101,6 +101,6 @@ int	main(int argc, char **argv, char **envp)
 	get_commands(argv, envp);
 	exec_command(envp);
 	free_all_func();
-	// while(1);
+	while(1);
 	return (WEXITSTATUS(g_all.status));
 }

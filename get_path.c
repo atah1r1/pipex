@@ -6,7 +6,7 @@
 /*   By: atahiri <atahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 14:39:46 by atahiri           #+#    #+#             */
-/*   Updated: 2021/06/29 13:27:53 by atahiri          ###   ########.fr       */
+/*   Updated: 2021/06/29 17:12:52 by atahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ char	*get_path(char **envp, char *cmd)
 	int		j;
 
 	j = -1;
+	if (strchr(cmd, '/'))
+		return (cmd);
 	paths = collect_paths(envp);
 	while (paths[++j])
 	{

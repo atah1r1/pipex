@@ -6,7 +6,7 @@
 /*   By: atahiri <atahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/24 09:32:24 by atahiri           #+#    #+#             */
-/*   Updated: 2021/06/29 13:12:49 by atahiri          ###   ########.fr       */
+/*   Updated: 2021/06/29 17:16:05 by atahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,5 @@ int	main(int argc, char **argv, char **envp)
 	}
 	get_commands(argv, envp);
 	exec_command(envp);
-	free_all_func();
-	while(1);
 	return (WEXITSTATUS(g_all.status));
 }

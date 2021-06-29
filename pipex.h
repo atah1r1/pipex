@@ -6,7 +6,7 @@
 /*   By: atahiri <atahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/24 09:32:40 by atahiri           #+#    #+#             */
-/*   Updated: 2021/06/28 14:57:14 by atahiri          ###   ########.fr       */
+/*   Updated: 2021/06/29 13:28:43 by atahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,12 @@ typedef struct s_pipex {
 	char	*cmd1_path;
 	char	*cmd2_path;
 	int		status;
+	char	**paths;
+	char	*command;
+	char	*f_path;
+	char	*s_path;
+	int		i;
+	int		j;
 }				t_pipex;
 
 t_pipex	g_all;
@@ -43,4 +49,5 @@ char	*get_path(char **envp, char *cmd);
 void	exit_func(char *msg, int code);
 void	free_d_p(char **ptr);
 void	free_all_func(void);
+char	*ft_strdup(const char *str);
 #endif

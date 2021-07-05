@@ -6,7 +6,7 @@
 #    By: atahiri <atahiri@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/24 09:44:00 by atahiri           #+#    #+#              #
-#    Updated: 2021/06/29 09:54:07 by atahiri          ###   ########.fr        #
+#    Updated: 2021/07/05 15:40:54 by atahiri          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,12 +23,13 @@ SRCS =	ft_split.c\
 		get_path.c\
 		utils.c\
 		ft_strdup.c\
+		ft_strchr.c\
 
 OBJS =	$(SRCS:.c=.o)
 
 $(NAME):
 	gcc -Wall -Werror -Wextra -c $(SRCS)
-	gcc -o $(NAME) $(OBJS) -g
+	gcc -o $(NAME) $(OBJS)
 
 clean:
 	rm -f *.o

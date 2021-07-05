@@ -6,7 +6,7 @@
 /*   By: atahiri <atahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/24 09:32:40 by atahiri           #+#    #+#             */
-/*   Updated: 2021/06/29 13:28:43 by atahiri          ###   ########.fr       */
+/*   Updated: 2021/07/05 15:04:31 by atahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,5 @@ void	exit_func(char *msg, int code);
 void	free_d_p(char **ptr);
 void	free_all_func(void);
 char	*ft_strdup(const char *str);
+char	*ft_strchr(const char *s, int c);
 #endif
